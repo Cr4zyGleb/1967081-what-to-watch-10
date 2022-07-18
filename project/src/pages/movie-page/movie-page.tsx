@@ -90,18 +90,18 @@ function MoviePage(): JSX.Element {
                 <p className="film-card__details-item">
                   <strong className="film-card__details-name">Starring</strong>
                   <span className="film-card__details-value">
-                    <p>Bill Murray </p>
-                    <p>Edward Norton</p>
-                    <p>Jude Law</p>
-                    <p>Willem Dafoe</p>
-                    <p>Saoirse Ronan</p>
-                    <p>Tony Revoloru</p>
-                    <p>Tilda Swinton</p>
-                    <p>Tom Wilkinson</p>
-                    <p>Owen Wilkinson</p>
-                    <p>Adrien pody</p>
-                    <p>Ralph Fiennes</p>
-                    <p>Jeff Goldblum</p>
+                    Bill Murray <br/>
+                    Edward Norton <br/>
+                    Jude Law <br/>
+                    Willem Dafoe <br/>
+                    Saoirse Ronan <br/>
+                    Tony Revoloru <br/>
+                    Tilda Swinton <br/>
+                    Tom Wilkinson <br/>
+                    Owen Wilkinson <br/>
+                    Adrien pody <br/>
+                    Ralph Fiennes <br/>
+                    Jeff Goldblum <br/>
                   </span>
                 </p>
               </div>
