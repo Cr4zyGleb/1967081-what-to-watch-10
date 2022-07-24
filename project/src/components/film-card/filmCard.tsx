@@ -1,10 +1,11 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { FilmType } from '../../types/types';
 import VideoPlayer from '../video-player/video-player';
 
 function FilmCard({ film }: FilmType): JSX.Element {
   const [isPlaying, setIsPlaying] = useState(false);
-  const { description, posterImage, id } = film;
+  const { description, id } = film;
   let timer: NodeJS.Timeout | null = null;
   const handleArticleOnMouseEnter = () => {
     timer = setTimeout(() => {
@@ -25,14 +26,15 @@ function FilmCard({ film }: FilmType): JSX.Element {
       onMouseLeave={handleArticleOnMouseLeave}
     >
       <div id={`${id}`} className="small-film-card__image">
-        {isPlaying ?
-          <VideoPlayer film={film} isPlaying={isPlaying} setIsPlaying={setIsPlaying}/>
-          :
-          <img src={posterImage} alt={description} width="280" height="175" />}
+        <VideoPlayer film={film} isPlaying={isPlaying} setIsPlaying={setIsPlaying} />
       </div>
+
       <h3 className="small-film-card__title">
-        <a className="small-film-card__link" href="film-page.html">{description}</a>
+        <Link to={`/films/${id}`} className="small-film-card__link">
+          {description}
+        </Link>
       </h3>
+
     </article>
   );
 }

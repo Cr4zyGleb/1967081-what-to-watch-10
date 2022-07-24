@@ -13,7 +13,7 @@ function VideoPlayer({ film, isPlaying, setIsPlaying }: VideoPlayerProps): JSX.E
     if (isPlaying) {
       videoRef.current.play();
     }else {
-      videoRef.current.pause();
+      videoRef.current.load();
     }
   }, [isPlaying]);
 

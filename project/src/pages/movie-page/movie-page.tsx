@@ -1,5 +1,5 @@
 import { Fragment } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import LogoFooter from '../../components/logo-footer/logo-footer';
 import Logo from '../../components/logo/logo';
 import { FilmsType } from '../../types/types';
@@ -54,7 +54,11 @@ function MoviePage({ films }: FilmsType): JSX.Element {
                   <span>My list</span>
                   <span className="film-card__count">9</span>
                 </button>
-                <a href="add-review.html" className="btn film-card__button">Add review</a>
+                {/* заменить на авторизацию */}
+                {filmId !== 5 ?
+                  <Link to={`/films/${filmId}/review`} className="btn film-card__button">Add review</Link>
+                  :
+                  ''}
               </div>
             </div>
           </div>

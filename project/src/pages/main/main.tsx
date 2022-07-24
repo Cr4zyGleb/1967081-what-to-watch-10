@@ -1,7 +1,8 @@
+import { Link } from 'react-router-dom';
 import FilmCard from '../../components/film-card/filmCard';
 import LogoFooter from '../../components/logo-footer/logo-footer';
 import Logo from '../../components/logo/logo';
-import { AppMainProps} from '../../types/types';
+import { AppMainProps } from '../../types/types';
 
 function MainPage({ title, releaseDate, genre, films }: AppMainProps): JSX.Element {
   return (
@@ -46,11 +47,13 @@ function MainPage({ title, releaseDate, genre, films }: AppMainProps): JSX.Eleme
         <h1 className="visually-hidden">WTW</h1>
 
         <header className="page-header film-card__head">
-          <Logo/>
+          <Logo />
           <ul className="user-block">
             <li className="user-block__item">
               <div className="user-block__avatar">
-                <img src="/img/avatar.jpg" alt="User avatar" width="63" height="63" />
+                <Link to="/mylist">
+                  <img src="/img/avatar.jpg" alt="User avatar" width="63" height="63" />
+                </Link>
               </div>
             </li>
             <li className="user-block__item">
@@ -139,7 +142,7 @@ function MainPage({ title, releaseDate, genre, films }: AppMainProps): JSX.Eleme
             <button className="catalog__button" type="button">Show more</button>
           </div>
         </section>
-        <LogoFooter/>
+        <LogoFooter />
       </div>
     </div>
   );

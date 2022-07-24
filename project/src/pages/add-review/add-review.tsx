@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import AddReviewComment from '../../components/add-review-comment/add-review-comment';
 import Logo from '../../components/logo/logo';
 import { FilmsType } from '../../types/types';
@@ -20,10 +20,10 @@ function AddReview({films}: FilmsType): JSX.Element {
           <nav className="breadcrumbs">
             <ul className="breadcrumbs__list">
               <li className="breadcrumbs__item">
-                <a href="film-page.html" className="breadcrumbs__link">{film?.description}</a>
+                <Link to = {`/films/${filmId}`} className="breadcrumbs__link">{film?.description}</Link>
               </li>
               <li className="breadcrumbs__item">
-                <a href="/" className="breadcrumbs__link">Add review</a>
+                <Link to = {`/films/${filmId}/review`} className="breadcrumbs__link">Add review</Link>
               </li>
             </ul>
           </nav>
