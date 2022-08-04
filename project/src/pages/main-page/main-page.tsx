@@ -10,9 +10,8 @@ import { useAppSelector } from '../../hooks';
 import ShowMoreButton from '../../components/show-more-button/show-more-button';
 
 function MainPage({ title, releaseDate, genre, films}: AppMainProps): JSX.Element {
-  const stateFilms = useAppSelector((state) => state.films);
   const maxRenderedFilmsQuantity = useAppSelector((state) => state.maxRenderedFilmsQuantity);
-  let renderedFilmsQuantity = 0;
+  const stateFilms = useAppSelector((state) => state.films.slice(0, maxRenderedFilmsQuantity));
   return (
     <div>
       <div className="visually-hidden">
@@ -108,13 +107,7 @@ function MainPage({ title, releaseDate, genre, films}: AppMainProps): JSX.Elemen
           <h2 className="catalog__title visually-hidden">Catalog</h2>
           <GenresList films = {films}/>
           <div className="catalog__films-list">
-            {stateFilms.map((film, index) => {
-              renderedFilmsQuantity++;
-              if (renderedFilmsQuantity <= maxRenderedFilmsQuantity) {
-                return <FilmCard film={film} key={uuidv4()}/>;
-              }
-              return '';
-            }
+            {stateFilms.map((film, index) => (<FilmCard film={film} key={uuidv4()}/>)
             )}
           </div>
           <ShowMoreButton/>

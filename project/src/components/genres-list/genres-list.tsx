@@ -1,4 +1,3 @@
-import { v4 as uuidv4 } from 'uuid';
 import { FilmsType } from '../../types/types';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {changeGenre, changeFilms} from '../../reducer/action';
@@ -18,7 +17,7 @@ function GenresList({ films }: FilmsType): JSX.Element {
   const genres = getGenres();
   const createGenresList = () => (
     genres.map((elem) => (
-      <li key={uuidv4()} className={`catalog__genres-item ${ stateGenre === elem ? 'catalog__genres-item--active' : ''}`}>
+      <li key={elem} className={`catalog__genres-item ${ stateGenre === elem ? 'catalog__genres-item--active' : ''}`}>
         <a href="/" onClick={(event) => handleOnClickButton(event, elem)} className="catalog__genres-link">{elem}</a>
       </li>)
     )

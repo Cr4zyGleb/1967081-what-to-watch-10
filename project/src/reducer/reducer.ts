@@ -6,7 +6,7 @@ import { changeGenre, changeFilms, changeMaxRenderedFilmsQuantity } from './acti
 const beginRenderedFilmsQuantity = 8;
 
 const initialState = {
-  genre: 'All genres',
+  genre: GENRES.ALLGENRES,
   films: FILMS,
   maxRenderedFilmsQuantity: beginRenderedFilmsQuantity
 };
@@ -21,9 +21,8 @@ const reducer = createReducer(initialState, (builder) => {
     .addCase(changeFilms, (state) => {
       state.films = FILMS.filter((elem) => elem.genre === state.genre || state.genre === GENRES.ALLGENRES);
     })
-    .addCase(changeMaxRenderedFilmsQuantity, (state, action) => {
-      const {maxRenderedFilmsQuantity} = action.payload;
-      state.maxRenderedFilmsQuantity = maxRenderedFilmsQuantity;
+    .addCase(changeMaxRenderedFilmsQuantity, (state) => {
+      state.maxRenderedFilmsQuantity = Math.min(state.maxRenderedFilmsQuantity + 8, state.films.length);
     });
 });
 

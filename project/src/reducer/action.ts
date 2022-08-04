@@ -4,4 +4,4 @@ export const changeGenre = createAction<{genre : string}>('changeGenre');
 
 export const changeFilms = createAction('changeFilms');
 
-export const changeMaxRenderedFilmsQuantity = createAction<{maxRenderedFilmsQuantity : number}>('changeMaxRenderedFilmsQuantity');
+export const changeMaxRenderedFilmsQuantity = createAction('changeMaxRenderedFilmsQuantity');

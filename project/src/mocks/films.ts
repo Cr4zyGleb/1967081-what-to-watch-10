@@ -168,7 +168,7 @@ export const FILMS: Films = [
     director: 'no-country-for-old-men',
     starring: ['no-country-for-old-men', 'no-country-for-old-men', 'no-country-for-old-men'],
     runTime: 118,
-    genre: 'Drama',
+    genre: 'Fantastic',
     released: 2022,
     isFavorite: false
   },
@@ -187,7 +187,7 @@ export const FILMS: Films = [
     director: 'no-country-for-old-men',
     starring: ['no-country-for-old-men', 'no-country-for-old-men', 'no-country-for-old-men'],
     runTime: 118,
-    genre: 'Drama',
+    genre: 'Fantastic',
     released: 2022,
     isFavorite: false
   },
@@ -244,7 +244,7 @@ export const FILMS: Films = [
     director: 'no-country-for-old-men',
     starring: ['no-country-for-old-men', 'no-country-for-old-men', 'no-country-for-old-men'],
     runTime: 118,
-    genre: 'Documental',
+    genre: 'Fantastic',
     released: 2022,
     isFavorite: false
   },

@@ -19,12 +19,6 @@ export enum FilmLevels {
 }
 
 export const GENRES = {
-  ALLGENRES: 'All genres',
-  DRAMA: 'Drama',
-  FANTASTIC: 'Fantastic',
-  FIGHTING: 'Fighting',
-  COMEDY: 'Comedy',
-  MELODRAM: 'MELODRAM',
-  DOCUMENTAL: 'Documental',
+  ALLGENRES: 'All genres'
 };
 
