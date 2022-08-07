@@ -5,13 +5,14 @@ import FilmCard from '../../components/film-card/filmCard';
 import LogoFooter from '../../components/logo-footer/logo-footer';
 import Logo from '../../components/logo/logo';
 import MoviePageTabs from '../../components/movie-page-tabs/movie-page-tabs';
-import { FilmsType } from '../../types/types';
 import ErrorScreen404 from '../error-screen-404/error-screen-404';
+import { useAppSelector } from '../../hooks';
 
-function MoviePage({ films }: FilmsType): JSX.Element {
+function MoviePage(): JSX.Element {
+  const loadedFilms = useAppSelector((state) => state.loadedFilms);
   const params = useParams();
   const filmId = Number(params.id);
-  const film = films.find((element) => element.id === filmId);
+  const film = loadedFilms.find((element) => element.id === filmId);
   if (!film) {
     return <ErrorScreen404 />;
   }
@@ -20,7 +21,7 @@ function MoviePage({ films }: FilmsType): JSX.Element {
       <section className="film-card film-card--full">
         <div className="film-card__hero">
           <div className="film-card__bg">
-            <img src={`/${film.posterImage}`} alt={film.name} />
+            <img src={`${film.posterImage}`} alt={film.name} />
           </div>
 
           <h1 className="visually-hidden">WTW</h1>
@@ -30,7 +31,7 @@ function MoviePage({ films }: FilmsType): JSX.Element {
             <ul className="user-block">
               <li className="user-block__item">
                 <div className="user-block__avatar">
-                  <img src="/img/avatar.jpg" alt="User avatar" width="63" height="63" />
+                  <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
                 </div>
               </li>
               <li className="user-block__item">
@@ -74,7 +75,7 @@ function MoviePage({ films }: FilmsType): JSX.Element {
         <div className="film-card__wrap film-card__translate-top">
           <div className="film-card__info">
             <div className="film-card__poster film-card__poster--big">
-              <img src={`/${film.posterImage}`} alt={`${film.name} poster`} width="218" height="327" />
+              <img src={`${film.posterImage}`} alt={`${film.name} poster`} width="218" height="327" />
             </div>
             <MoviePageTabs film={film} />
           </div>
@@ -85,7 +86,7 @@ function MoviePage({ films }: FilmsType): JSX.Element {
           <h2 className="catalog__title">More like this</h2>
 
           <div className="catalog__films-list">
-            {films.map((elem, index) => {
+            {loadedFilms.map((elem, index) => {
               const maxRenderedFilmsQuantity = 4;
               if (index < maxRenderedFilmsQuantity) {
                 return <FilmCard film={elem} key={uuidv4()}/>;

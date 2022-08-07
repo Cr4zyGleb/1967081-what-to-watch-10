@@ -1,14 +1,29 @@
 import {createReducer} from '@reduxjs/toolkit';
-import { GENRES } from '../const';
+import { AuthorizationStatus, GENRES } from '../const';
 import { FILMS } from '../mocks/films';
-import { changeGenre, changeFilms, changeMaxRenderedFilmsQuantity } from './action';
+import { Films } from '../types/types';
+import { changeGenre, changeFilms, changeMaxRenderedFilmsQuantity, loadFilms, requireAuthorization, setError, setDataLoadedStatus } from './action';
 
 const beginRenderedFilmsQuantity = 8;
 
-const initialState = {
+type InitialStateType = {
+  genre: string,
+  filteredFilms: Films,
+  loadedFilms : Films
+  maxRenderedFilmsQuantity: number,
+  error: string | null,
+  authorizationStatus: AuthorizationStatus,
+  isDataLoaded: boolean,
+};
+
+const initialState : InitialStateType = {
   genre: GENRES.ALLGENRES,
-  films: FILMS,
-  maxRenderedFilmsQuantity: beginRenderedFilmsQuantity
+  filteredFilms: FILMS,
+  loadedFilms : FILMS,
+  maxRenderedFilmsQuantity: beginRenderedFilmsQuantity,
+  error: null,
+  authorizationStatus: AuthorizationStatus.Unknown,
+  isDataLoaded: false,
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -19,10 +34,23 @@ const reducer = createReducer(initialState, (builder) => {
       state.maxRenderedFilmsQuantity = beginRenderedFilmsQuantity;
     })
     .addCase(changeFilms, (state) => {
-      state.films = FILMS.filter((elem) => elem.genre === state.genre || state.genre === GENRES.ALLGENRES);
+      state.filteredFilms = state.loadedFilms.filter((elem) => elem.genre === state.genre || state.genre === GENRES.ALLGENRES);
+    })
+    .addCase(loadFilms, (state, action) => {
+      state.loadedFilms = action.payload;
+
+    })
+    .addCase(requireAuthorization, (state, action) => {
+      state.authorizationStatus = action.payload;
+    })
+    .addCase(setError, (state, action) => {
+      state.error = action.payload;
+    })
+    .addCase(setDataLoadedStatus, (state, action) => {
+      state.isDataLoaded = action.payload;
     })
     .addCase(changeMaxRenderedFilmsQuantity, (state) => {
-      state.maxRenderedFilmsQuantity = Math.min(state.maxRenderedFilmsQuantity + 8, state.films.length);
+      state.maxRenderedFilmsQuantity = Math.min(state.maxRenderedFilmsQuantity + 8, state.loadedFilms.length);
     });
 });
 

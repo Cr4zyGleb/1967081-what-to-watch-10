@@ -1,7 +1,7 @@
-import { FilmsType } from '../../types/types';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {changeGenre, changeFilms} from '../../reducer/action';
-function GenresList({ films }: FilmsType): JSX.Element {
+function GenresList(): JSX.Element {
+  const loadedFilms = useAppSelector((state) => state.loadedFilms);
   const stateGenre = useAppSelector((state) => state.genre);
   const dispatch = useAppDispatch();
   const handleOnClickButton = (event: React.MouseEvent, elem : string) => {
@@ -11,7 +11,7 @@ function GenresList({ films }: FilmsType): JSX.Element {
   };
   const getGenres = () => {
     const newGenres = ['All genres'];
-    films.forEach((elem) => newGenres.includes(elem.genre) ? '' : newGenres.push(elem.genre));
+    loadedFilms.forEach((elem) => newGenres.includes(elem.genre) ? '' : newGenres.push(elem.genre));
     return newGenres;
   };
   const genres = getGenres();

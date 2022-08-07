@@ -1,9 +1,10 @@
 import FilmCard from '../../components/film-card/filmCard';
 import LogoFooter from '../../components/logo-footer/logo-footer';
 import Logo from '../../components/logo/logo';
-import { FilmsType } from '../../types/types';
+import { useAppSelector } from '../../hooks';
 
-function MyList({ films }: FilmsType): JSX.Element {
+function MyList(): JSX.Element {
+  const loadedFilms = useAppSelector((state) => state.loadedFilms);
   return (
 
     <div className="user-page">
@@ -13,7 +14,7 @@ function MyList({ films }: FilmsType): JSX.Element {
         <ul className="user-block">
           <li className="user-block__item">
             <div className="user-block__avatar">
-              <img src="/img/avatar.jpg" alt="User avatar" width="63" height="63" />
+              <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
             </div>
           </li>
           <li className="user-block__item">
@@ -26,7 +27,7 @@ function MyList({ films }: FilmsType): JSX.Element {
         <h2 className="catalog__title visually-hidden">Catalog</h2>
 
         <div className="catalog__films-list">
-          {films.map((film) => (
+          {loadedFilms.map((film) => (
             <FilmCard film={film} key={film.id} />
           ))}
         </div>
