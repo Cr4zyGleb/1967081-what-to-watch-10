@@ -25,7 +25,8 @@ export const GENRES = {
 export enum APIRoute {
   Films = '/films',
   Login = '/login',
-  Logout = '/logout'
+  Logout = '/logout',
+  Promo = '/promo'
 }
 
 export enum AppRoute {

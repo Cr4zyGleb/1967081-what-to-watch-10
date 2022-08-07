@@ -11,8 +11,8 @@ import ShowMoreButton from '../../components/show-more-button/show-more-button';
 function MainPage(): JSX.Element {
   const maxRenderedFilmsQuantity = useAppSelector((state) => state.maxRenderedFilmsQuantity);
   const loadedFilms = useAppSelector((state) => state.loadedFilms.slice(0, maxRenderedFilmsQuantity));
-  const promoFilm = loadedFilms[0];
-  const {name, released, genre} = promoFilm;
+  const promoFilm = useAppSelector((state) => state.promoFilm);
+  const {name, released, genre , posterImage, backgroundImage} = promoFilm;
   return (
     <div>
       <div className="visually-hidden">
@@ -49,7 +49,7 @@ function MainPage(): JSX.Element {
 
       <section className="film-card">
         <div className="film-card__bg">
-          <img src="img/bg-the-grand-budapest-hotel.jpg" alt="The Grand Budapest Hotel" />
+          <img src= {backgroundImage} alt= {name} />
         </div>
 
         <h1 className="visually-hidden">WTW</h1>
@@ -73,7 +73,7 @@ function MainPage(): JSX.Element {
         <div className="film-card__wrap">
           <div className="film-card__info">
             <div className="film-card__poster">
-              <img src="img/the-grand-budapest-hotel-poster.jpg" alt="The Grand Budapest Hotel poster" width="218" height="327" />
+              <img src= {posterImage} alt= {name} width="218" height="327" />
             </div>
 
             <div className="film-card__desc">
