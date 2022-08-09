@@ -1,5 +1,3 @@
-import { v4 as uuidv4 } from 'uuid';
-
 import { Link } from 'react-router-dom';
 import FilmCard from '../../components/film-card/filmCard';
 import LogoFooter from '../../components/logo-footer/logo-footer';
@@ -10,7 +8,7 @@ import ShowMoreButton from '../../components/show-more-button/show-more-button';
 
 function MainPage(): JSX.Element {
   const maxRenderedFilmsQuantity = useAppSelector((state) => state.maxRenderedFilmsQuantity);
-  const loadedFilms = useAppSelector((state) => state.loadedFilms.slice(0, maxRenderedFilmsQuantity));
+  const filteredFilms = useAppSelector((state) => state.filteredFilms.slice(0, maxRenderedFilmsQuantity));
   const promoFilm = useAppSelector((state) => state.promoFilm);
   const {name, released, genre , posterImage, backgroundImage} = promoFilm;
   return (
@@ -108,7 +106,7 @@ function MainPage(): JSX.Element {
           <h2 className="catalog__title visually-hidden">Catalog</h2>
           <GenresList/>
           <div className="catalog__films-list">
-            {loadedFilms.map((film, index) => (<FilmCard film={film} key={uuidv4()}/>)
+            {filteredFilms.map((film, index) => (<FilmCard film={film} key={film.id}/>)
             )}
           </div>
           <ShowMoreButton/>

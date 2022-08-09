@@ -1,7 +1,7 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { AuthorizationStatus, GENRES } from '../const';
 import { FilmProps, Films } from '../types/types';
-import { changeGenre, changeFilms, changeMaxRenderedFilmsQuantity, loadFilms, loadPromoFilm, requireAuthorization, setError, setDataLoadedStatus } from './action';
+import { changeGenre, changeFilms, changeMaxRenderedFilmsQuantity, loadFilms, loadPromoFilm, requireAuthorization, setError, setDataLoadingStatus } from './action';
 
 const beginRenderedFilmsQuantity = 8;
 
@@ -13,7 +13,7 @@ type InitialStateType = {
   maxRenderedFilmsQuantity: number,
   error: string | null,
   authorizationStatus: AuthorizationStatus,
-  isDataLoaded: boolean
+  isDataLoading: boolean
 };
 
 const initialState: InitialStateType = {
@@ -42,7 +42,7 @@ const initialState: InitialStateType = {
   maxRenderedFilmsQuantity: beginRenderedFilmsQuantity,
   error: null,
   authorizationStatus: AuthorizationStatus.Unknown,
-  isDataLoaded: false,
+  isDataLoading: false,
 };
 const reducer = createReducer(initialState, (builder) => {
   builder
@@ -66,8 +66,8 @@ const reducer = createReducer(initialState, (builder) => {
     .addCase(setError, (state, action) => {
       state.error = action.payload;
     })
-    .addCase(setDataLoadedStatus, (state, action) => {
-      state.isDataLoaded = action.payload;
+    .addCase(setDataLoadingStatus, (state, action) => {
+      state.isDataLoading = action.payload;
     })
     .addCase(changeMaxRenderedFilmsQuantity, (state) => {
       state.maxRenderedFilmsQuantity = Math.min(state.maxRenderedFilmsQuantity + 8, state.loadedFilms.length);
