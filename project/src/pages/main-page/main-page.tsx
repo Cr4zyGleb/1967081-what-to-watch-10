@@ -5,7 +5,7 @@ import Logo from '../../components/logo/logo';
 import GenresList from '../../components/genres-list/genres-list';
 import { useAppSelector } from '../../hooks';
 import ShowMoreButton from '../../components/show-more-button/show-more-button';
-import { GENRES } from '../../const';
+import { AppRoute, GENRES } from '../../const';
 
 function MainPage(): JSX.Element {
   const maxRenderedFilmsQuantity = useAppSelector((state) => state.maxRenderedFilmsQuantity);
@@ -13,7 +13,7 @@ function MainPage(): JSX.Element {
   const genreState = useAppSelector((state) => state.genre);
   const filteredFilms = loadedFilmsState.filter((elem) => elem.genre === genreState || genreState === GENRES.ALLGENRES).slice(0, maxRenderedFilmsQuantity);
   const promoFilm = useAppSelector((state) => state.promoFilm);
-  const {name, released, genre , posterImage, backgroundImage} = promoFilm;
+  const { name, released, genre, posterImage, backgroundImage } = promoFilm;
   return (
     <div>
       <div className="visually-hidden">
@@ -50,7 +50,7 @@ function MainPage(): JSX.Element {
 
       <section className="film-card">
         <div className="film-card__bg">
-          <img src= {backgroundImage} alt= {name} />
+          <img src={backgroundImage} alt={name} />
         </div>
 
         <h1 className="visually-hidden">WTW</h1>
@@ -74,7 +74,7 @@ function MainPage(): JSX.Element {
         <div className="film-card__wrap">
           <div className="film-card__info">
             <div className="film-card__poster">
-              <img src= {posterImage} alt= {name} width="218" height="327" />
+              <img src={posterImage} alt={name} width="218" height="327" />
             </div>
 
             <div className="film-card__desc">
@@ -95,28 +95,30 @@ function MainPage(): JSX.Element {
                   <svg viewBox="0 0 19 20" width="19" height="20">
                     <use xlinkHref="#add"></use>
                   </svg>
-                  <span>My list</span>
+                  <Link to={AppRoute.MyList}>
+                    <span>My list</span>
+                  </Link>
                   <span className="film-card__count">9</span>
                 </button>
               </div>
             </div>
           </div>
         </div>
-      </section>
+      </section >
 
       <div className="page-content">
         <section className="catalog">
           <h2 className="catalog__title visually-hidden">Catalog</h2>
-          <GenresList/>
+          <GenresList />
           <div className="catalog__films-list">
-            {filteredFilms.map((film, index) => (<FilmCard film={film} key={film.id}/>)
+            {filteredFilms.map((film, index) => (<FilmCard film={film} key={film.id} />)
             )}
           </div>
-          <ShowMoreButton/>
+          <ShowMoreButton />
         </section>
         <LogoFooter />
       </div>
-    </div>
+    </div >
   );
 }
 
