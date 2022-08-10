@@ -10,10 +10,11 @@ import Player from '../../pages/player/player';
 import SignIn from '../../pages/sign-in/sign-in';
 import PrivateRoute from '../private-route/private-route';
 import LoadingScreen from '../../pages/loading-screen/loading-screen';
+import { isCheckedAuth } from '../../utils/utils';
 
 function App(): JSX.Element {
   const {authorizationStatus, isDataLoading} = useAppSelector((state) => state);
-  if (isDataLoading) {
+  if (isCheckedAuth(authorizationStatus) || isDataLoading) {
     return (
       <LoadingScreen />
     );

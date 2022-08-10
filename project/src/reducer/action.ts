@@ -4,8 +4,6 @@ import { FilmProps, Films } from '../types/types';
 
 export const changeGenre = createAction<{genre : string}>('changeGenre');
 
-export const changeFilms = createAction('changeFilms');
-
 export const changeMaxRenderedFilmsQuantity = createAction('changeMaxRenderedFilmsQuantity');
 
 export const loadFilms = createAction<Films>('loadFilms');

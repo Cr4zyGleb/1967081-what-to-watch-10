@@ -5,10 +5,13 @@ import Logo from '../../components/logo/logo';
 import GenresList from '../../components/genres-list/genres-list';
 import { useAppSelector } from '../../hooks';
 import ShowMoreButton from '../../components/show-more-button/show-more-button';
+import { GENRES } from '../../const';
 
 function MainPage(): JSX.Element {
   const maxRenderedFilmsQuantity = useAppSelector((state) => state.maxRenderedFilmsQuantity);
-  const filteredFilms = useAppSelector((state) => state.filteredFilms.slice(0, maxRenderedFilmsQuantity));
+  const loadedFilmsState = useAppSelector((state) => state.loadedFilms);
+  const genreState = useAppSelector((state) => state.genre);
+  const filteredFilms = loadedFilmsState.filter((elem) => elem.genre === genreState || genreState === GENRES.ALLGENRES).slice(0, maxRenderedFilmsQuantity);
   const promoFilm = useAppSelector((state) => state.promoFilm);
   const {name, released, genre , posterImage, backgroundImage} = promoFilm;
   return (
