@@ -22,3 +22,19 @@ export const GENRES = {
   ALLGENRES: 'All genres'
 };
 
+export enum APIRoute {
+  Films = '/films',
+  Login = '/login',
+  Logout = '/logout',
+  Promo = '/promo'
+}
+
+export enum AppRoute {
+  Root = '/',
+  Login = 'login',
+  MyList = 'mylist',
+  Films = 'films',
+  Player = 'player'
+}
+
+export const TIMEOUT_SHOW_ERROR = 2000;

@@ -17,7 +17,7 @@ function VideoPlayer({ film, isPlaying, setIsPlaying }: VideoPlayerProps): JSX.E
   }, [isPlaying]);
 
   return (
-    <video className="player__video" ref={videoRef} src={videoLink} poster={`/${posterImage}`} muted loop width='280' height='175' />
+    <video className="player__video" ref={videoRef} src={videoLink} poster={`${posterImage}`} muted loop width='280' height='175' />
   );
 }
 

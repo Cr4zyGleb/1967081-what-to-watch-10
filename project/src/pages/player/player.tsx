@@ -1,11 +1,12 @@
 import { useParams } from 'react-router-dom';
-import { FilmsType } from '../../types/types';
+import { useAppSelector } from '../../hooks';
 import ErrorScreen404 from '../error-screen-404/error-screen-404';
 
-function Player({films}: FilmsType): JSX.Element {
+function Player(): JSX.Element {
+  const loadedFilms = useAppSelector((state) => state.loadedFilms);
   const params = useParams();
   const filmId = Number(params.id);
-  const film = films.find((element) => element.id === filmId);
+  const film = loadedFilms.find((element) => element.id === filmId);
   if (!film) {
     return <ErrorScreen404/>;
   }

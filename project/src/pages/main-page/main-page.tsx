@@ -1,17 +1,16 @@
-import { v4 as uuidv4 } from 'uuid';
-
 import { Link } from 'react-router-dom';
 import FilmCard from '../../components/film-card/filmCard';
 import LogoFooter from '../../components/logo-footer/logo-footer';
 import Logo from '../../components/logo/logo';
-import { AppMainProps } from '../../types/types';
 import GenresList from '../../components/genres-list/genres-list';
 import { useAppSelector } from '../../hooks';
 import ShowMoreButton from '../../components/show-more-button/show-more-button';
 
-function MainPage({ title, releaseDate, genre, films}: AppMainProps): JSX.Element {
+function MainPage(): JSX.Element {
   const maxRenderedFilmsQuantity = useAppSelector((state) => state.maxRenderedFilmsQuantity);
-  const stateFilms = useAppSelector((state) => state.films.slice(0, maxRenderedFilmsQuantity));
+  const filteredFilms = useAppSelector((state) => state.filteredFilms.slice(0, maxRenderedFilmsQuantity));
+  const promoFilm = useAppSelector((state) => state.promoFilm);
+  const {name, released, genre , posterImage, backgroundImage} = promoFilm;
   return (
     <div>
       <div className="visually-hidden">
@@ -48,7 +47,7 @@ function MainPage({ title, releaseDate, genre, films}: AppMainProps): JSX.Elemen
 
       <section className="film-card">
         <div className="film-card__bg">
-          <img src="img/bg-the-grand-budapest-hotel.jpg" alt="The Grand Budapest Hotel" />
+          <img src= {backgroundImage} alt= {name} />
         </div>
 
         <h1 className="visually-hidden">WTW</h1>
@@ -59,7 +58,7 @@ function MainPage({ title, releaseDate, genre, films}: AppMainProps): JSX.Elemen
             <li className="user-block__item">
               <div className="user-block__avatar">
                 <Link to="/mylist">
-                  <img src="/img/avatar.jpg" alt="User avatar" width="63" height="63" />
+                  <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
                 </Link>
               </div>
             </li>
@@ -72,14 +71,14 @@ function MainPage({ title, releaseDate, genre, films}: AppMainProps): JSX.Elemen
         <div className="film-card__wrap">
           <div className="film-card__info">
             <div className="film-card__poster">
-              <img src="/img/the-grand-budapest-hotel-poster.jpg" alt="The Grand Budapest Hotel poster" width="218" height="327" />
+              <img src= {posterImage} alt= {name} width="218" height="327" />
             </div>
 
             <div className="film-card__desc">
-              <h2 className="film-card__title">{title}</h2>
+              <h2 className="film-card__title">{name}</h2>
               <p className="film-card__meta">
                 <span className="film-card__genre">{genre}</span>
-                <span className="film-card__year">{releaseDate}</span>
+                <span className="film-card__year">{released}</span>
               </p>
 
               <div className="film-card__buttons">
@@ -105,9 +104,9 @@ function MainPage({ title, releaseDate, genre, films}: AppMainProps): JSX.Elemen
       <div className="page-content">
         <section className="catalog">
           <h2 className="catalog__title visually-hidden">Catalog</h2>
-          <GenresList films = {films}/>
+          <GenresList/>
           <div className="catalog__films-list">
-            {stateFilms.map((film, index) => (<FilmCard film={film} key={uuidv4()}/>)
+            {filteredFilms.map((film, index) => (<FilmCard film={film} key={film.id}/>)
             )}
           </div>
           <ShowMoreButton/>

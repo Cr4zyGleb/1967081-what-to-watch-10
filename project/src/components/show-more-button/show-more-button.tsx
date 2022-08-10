@@ -2,7 +2,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { changeMaxRenderedFilmsQuantity } from '../../reducer/action';
 
 function ShowMoreButton(): JSX.Element {
-  const stateFilms = useAppSelector((state) => state.films);
+  const stateFilms = useAppSelector((state) => state.loadedFilms);
   const dispatch = useAppDispatch();
   const maxRenderedFilmsQuantity = useAppSelector((state) => state.maxRenderedFilmsQuantity);
   const handlerShowMoreButtonClick = () => {
