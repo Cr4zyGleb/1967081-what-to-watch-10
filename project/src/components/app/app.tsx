@@ -13,7 +13,7 @@ import LoadingScreen from '../../pages/loading-screen/loading-screen';
 import { isCheckedAuth } from '../../utils/utils';
 
 function App(): JSX.Element {
-  const {authorizationStatus, isDataLoading} = useAppSelector((state) => state);
+  const { authorizationStatus, isDataLoading } = useAppSelector((state) => state);
   if (isCheckedAuth(authorizationStatus) || isDataLoading) {
     return (
       <LoadingScreen />
@@ -23,25 +23,30 @@ function App(): JSX.Element {
     <BrowserRouter>
       <Routes>
         <Route path={AppRoute.Root}>
-          <Route index element={<MainPage/>} />
+          <Route index element={<MainPage />} />
           <Route path={AppRoute.Films}>
-            <Route path=':id' element={<MoviePage/>}></Route>
+            <Route path=':id' element={
+              <PrivateRoute authorizationStatus={authorizationStatus}>
+                <MoviePage />
+              </PrivateRoute>
+            }
+            />
             <Route path=':id/review' element={
-              <PrivateRoute authorizationStatus = {authorizationStatus}>
-                <AddReview/>
+              <PrivateRoute authorizationStatus={authorizationStatus}>
+                <AddReview />
               </PrivateRoute>
             }
             />
           </Route>
           <Route path={AppRoute.Login} element={<SignIn />} />
           <Route path={AppRoute.MyList} element={
-            <PrivateRoute authorizationStatus = {authorizationStatus}>
-              <MyList/>
+            <PrivateRoute authorizationStatus={authorizationStatus}>
+              <MyList />
             </PrivateRoute>
           }
           />
           <Route path={AppRoute.Player} >
-            <Route path=':id' element={<Player/>} />
+            <Route path=':id' element={<Player />} />
           </Route>
         </Route>
         <Route
