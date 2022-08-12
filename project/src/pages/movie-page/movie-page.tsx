@@ -7,9 +7,10 @@ import Logo from '../../components/logo/logo';
 import MoviePageTabs from '../../components/movie-page-tabs/movie-page-tabs';
 import ErrorScreen404 from '../error-screen-404/error-screen-404';
 import { useAppSelector } from '../../hooks';
+import SignOutComponent from '../../components/sign-out-component/sign-out-component';
 
 function MoviePage(): JSX.Element {
-  const loadedFilms = useAppSelector((state) => state.loadedFilms);
+  const { loadedFilms } = useAppSelector((state) => state);
   const params = useParams();
   const filmId = Number(params.id);
   const film = loadedFilms.find((element) => element.id === filmId);
@@ -28,16 +29,7 @@ function MoviePage(): JSX.Element {
 
           <header className="page-header film-card__head">
             <Logo />
-            <ul className="user-block">
-              <li className="user-block__item">
-                <div className="user-block__avatar">
-                  <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
-                </div>
-              </li>
-              <li className="user-block__item">
-                <a href="/" className="user-block__link">Sign out</a>
-              </li>
-            </ul>
+            <SignOutComponent />
           </header>
 
           <div className="film-card__wrap">

@@ -1,7 +1,7 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { AuthorizationStatus, GENRES } from '../const';
 import { FilmProps, Films } from '../types/types';
-import { changeGenre, changeFilms, changeMaxRenderedFilmsQuantity, loadFilms, loadPromoFilm, requireAuthorization, setError, setDataLoadingStatus } from './action';
+import { changeGenre, changeMaxRenderedFilmsQuantity, loadFilms, loadPromoFilm, requireAuthorization, setError, setDataLoadingStatus } from './action';
 
 const beginRenderedFilmsQuantity = 8;
 
@@ -50,9 +50,6 @@ const reducer = createReducer(initialState, (builder) => {
       const { genre } = action.payload;
       state.genre = genre;
       state.maxRenderedFilmsQuantity = beginRenderedFilmsQuantity;
-    })
-    .addCase(changeFilms, (state) => {
-      state.filteredFilms = state.loadedFilms.filter((elem) => elem.genre === state.genre || state.genre === GENRES.ALLGENRES);
     })
     .addCase(loadFilms, (state, action) => {
       state.loadedFilms = action.payload;

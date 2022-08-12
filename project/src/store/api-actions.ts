@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AxiosInstance } from 'axios';
 import { store } from '.';
-import { changeFilms, loadFilms, loadPromoFilm, requireAuthorization, setDataLoadingStatus, setError } from '../reducer/action';
+import { loadFilms, loadPromoFilm, requireAuthorization, setDataLoadingStatus, setError } from '../reducer/action';
 import { APIRoute, AuthorizationStatus, TIMEOUT_SHOW_ERROR } from '../const';
 import { dropToken, saveToken } from '../services/token';
 import { AuthData } from '../types/auth-data';
@@ -19,7 +19,6 @@ export const fetchFilmsAction = createAsyncThunk<void, undefined, {
     dispatch(setDataLoadingStatus(true));
     const {data} = await api.get<Films>(APIRoute.Films);
     dispatch(loadFilms(data));
-    dispatch(changeFilms());
     dispatch(setDataLoadingStatus(false));
   },
 );
