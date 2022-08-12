@@ -1,5 +1,5 @@
 import {useAppDispatch, useAppSelector} from '../../hooks';
-import {changeGenre, changeFilms} from '../../reducer/action';
+import {changeGenre} from '../../reducer/action';
 function GenresList(): JSX.Element {
   const loadedFilms = useAppSelector((state) => state.loadedFilms);
   const stateGenre = useAppSelector((state) => state.genre);
@@ -7,7 +7,6 @@ function GenresList(): JSX.Element {
   const handleOnClickButton = (event: React.MouseEvent, elem : string) => {
     event.preventDefault();
     dispatch(changeGenre({genre: elem}));
-    dispatch(changeFilms());
   };
   const getGenres = () => {
     const newGenres = ['All genres'];
