@@ -3,14 +3,17 @@ import { Fragment } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import FilmCard from '../../components/film-card/filmCard';
 import LogoFooter from '../../components/logo-footer/logo-footer';
-import Logo from '../../components/logo/logo';
 import MoviePageTabs from '../../components/movie-page-tabs/movie-page-tabs';
 import ErrorScreen404 from '../error-screen-404/error-screen-404';
 import { useAppSelector } from '../../hooks';
-import SignOutComponent from '../../components/sign-out-component/sign-out-component';
+import { AuthorizationStatus, HeaderClassNames } from '../../const';
+import MyListComponent from '../../components/mylist-component/mylist-component';
+import HeaderComponent from '../../components/header-component/header-component';
+import { CheckedAuthStatus } from '../../utils/utils';
 
 function MoviePage(): JSX.Element {
-  const { loadedFilms } = useAppSelector((state) => state);
+  const { loadedFilms, authorizationStatus } = useAppSelector((state) => state);
+  const isAuthStatus = CheckedAuthStatus(authorizationStatus);
   const params = useParams();
   const filmId = Number(params.id);
   const film = loadedFilms.find((element) => element.id === filmId);
@@ -22,16 +25,10 @@ function MoviePage(): JSX.Element {
       <section className="film-card film-card--full">
         <div className="film-card__hero">
           <div className="film-card__bg">
-            <img src={`${film.posterImage}`} alt={film.name} />
+            <img src={`${film.backgroundImage}`} alt={film.name} />
           </div>
-
           <h1 className="visually-hidden">WTW</h1>
-
-          <header className="page-header film-card__head">
-            <Logo />
-            <SignOutComponent />
-          </header>
-
+          <HeaderComponent isGuest = {authorizationStatus !== AuthorizationStatus.Auth} classText = {HeaderClassNames.FilmCardHead}/>
           <div className="film-card__wrap">
             <div className="film-card__desc">
               <h2 className="film-card__title">{film.name}</h2>
@@ -47,15 +44,8 @@ function MoviePage(): JSX.Element {
                   </svg>
                   <span>Play</span>
                 </button>
-                <button className="btn btn--list film-card__button" type="button">
-                  <svg viewBox="0 0 19 20" width="19" height="20">
-                    <use xlinkHref="#add"></use>
-                  </svg>
-                  <span>My list</span>
-                  <span className="film-card__count">9</span>
-                </button>
-                {/* заменить на авторизацию */}
-                {filmId !== 5 ?
+                {isAuthStatus ? <MyListComponent/> : ''}
+                {authorizationStatus === AuthorizationStatus.Auth ?
                   <Link to={`/films/${filmId}/review`} className="btn film-card__button">Add review</Link>
                   :
                   ''}
@@ -81,7 +71,7 @@ function MoviePage(): JSX.Element {
             {loadedFilms.map((elem, index) => {
               const maxRenderedFilmsQuantity = 4;
               if (index < maxRenderedFilmsQuantity) {
-                return <FilmCard film={elem} key={uuidv4()}/>;
+                return <FilmCard film={elem} key={uuidv4()} />;
               }
               return '';
             }

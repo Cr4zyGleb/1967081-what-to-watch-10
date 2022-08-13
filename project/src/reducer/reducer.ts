@@ -4,6 +4,7 @@ import { FilmProps, Films } from '../types/types';
 import { changeGenre, changeMaxRenderedFilmsQuantity, loadFilms, loadPromoFilm, requireAuthorization, setError, setDataLoadingStatus } from './action';
 
 const beginRenderedFilmsQuantity = 8;
+const stepRenderingFilmsQuantity = 8;
 
 type InitialStateType = {
   genre: string,
@@ -67,7 +68,7 @@ const reducer = createReducer(initialState, (builder) => {
       state.isDataLoading = action.payload;
     })
     .addCase(changeMaxRenderedFilmsQuantity, (state) => {
-      state.maxRenderedFilmsQuantity = Math.min(state.maxRenderedFilmsQuantity + 8, state.loadedFilms.length);
+      state.maxRenderedFilmsQuantity = Math.min(state.maxRenderedFilmsQuantity + stepRenderingFilmsQuantity, state.loadedFilms.length);
     });
 });
 

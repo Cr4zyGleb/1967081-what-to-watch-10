@@ -1,10 +1,6 @@
-import HeadGuest from '../../components/head-guest/head-guest';
 import MainPageComponent from '../../components/main-page-component/main-page-component';
-import { AuthorizationStatus } from '../../const';
-import { useAppSelector } from '../../hooks';
 
 function MainPage(): JSX.Element {
-  const {authorizationStatus} = useAppSelector((state) => state);
   return (
     <div>
       <div className="visually-hidden">
@@ -38,7 +34,7 @@ function MainPage(): JSX.Element {
           </symbol>
         </svg>
       </div>
-      {authorizationStatus === AuthorizationStatus.Auth ? <MainPageComponent/> : <HeadGuest/>}
+      <MainPageComponent/>
     </div>
   );
 }

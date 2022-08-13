@@ -1,3 +1,4 @@
+import { HeaderClassNames } from '../const';
 
 export type AppMainProps = {
   title: string;
@@ -38,6 +39,12 @@ export type FilmType = {
 
 export type IsFooterType = {
   isFooter?: boolean;
+}
+
+export type IsHeaderType = {
+  isGuest?: boolean;
+  filmId? : number;
+  classText : HeaderClassNames;
 }
 
 export type FilmsType = {
