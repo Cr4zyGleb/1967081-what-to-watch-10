@@ -1,13 +1,20 @@
 
 import { useState, ChangeEvent, FormEvent } from 'react';
+import { useParams } from 'react-router-dom';
+import { useAppDispatch} from '../../hooks';
+import { postFilmReview } from '../../store/api-actions';
 
 function AddReviewComment(): JSX.Element {
+  const params = useParams();
+  const dispatch = useAppDispatch();
+  const filmId = params.id;
   const [filmReview, setFilmReview] = useState({
-    rating: '',
-    'review-text': '',
+    rating: 7,
+    comment: 'Very Good',
   });
 
   const inputChangeHandler = (evt: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>) => {
+    evt.preventDefault();
     const { value, name } = evt.target;
     setFilmReview({
       ...filmReview,
@@ -17,7 +24,7 @@ function AddReviewComment(): JSX.Element {
 
   const postForm = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
-    //отправить данные на сервер
+    dispatch(postFilmReview([filmId, filmReview]));
   };
 
   return (
@@ -31,16 +38,16 @@ function AddReviewComment(): JSX.Element {
             <input onChange={inputChangeHandler} className="rating__input" id="star-9" type="radio" name="rating" value="9" />
             <label className="rating__label" htmlFor="star-9">Rating 9</label>
 
-            <input onChange={inputChangeHandler} className="rating__input" id="star-8" type="radio" name="rating" value="8" checked />
+            <input onChange={inputChangeHandler} className="rating__input" id="star-8" type="radio" name="rating" value="8" />
             <label className="rating__label" htmlFor="star-8">Rating 8</label>
 
-            <input onChange={inputChangeHandler} className="rating__input" id="star-7" type="radio" name="rating" value="7" />
+            <input onChange={inputChangeHandler} className="rating__input" id="star-7" type="radio" name="rating" value="7" checked/>
             <label className="rating__label" htmlFor="star-7">Rating 7</label>
 
             <input onChange={inputChangeHandler} className="rating__input" id="star-6" type="radio" name="rating" value="6" />
             <label className="rating__label" htmlFor="star-6">Rating 6</label>
 
-            <input onChange={inputChangeHandler} className="rating__input" id="star-5" type="radio" name="rating" value="5" />
+            <input onChange={inputChangeHandler} className="rating__input" id="star-5" type="radio" name="rating" value="5"/>
             <label className="rating__label" htmlFor="star-5">Rating 5</label>
 
             <input onChange={inputChangeHandler} className="rating__input" id="star-4" type="radio" name="rating" value="4" />
@@ -58,7 +65,7 @@ function AddReviewComment(): JSX.Element {
         </div>
 
         <div className="add-review__text">
-          <textarea className="add-review__textarea" onChange={inputChangeHandler} value={filmReview['review-text']} name="review-text" id="review-text" placeholder="Review text"></textarea>
+          <textarea className="add-review__textarea" onChange={inputChangeHandler} name="comment" id="review-text" placeholder="Very Good"></textarea>
           <div className="add-review__submit">
             <button className="add-review__btn" type="submit">Post</button>
           </div>

@@ -64,4 +64,9 @@ export type FilmReviewType = {
   }
 }
 
+export type CommentData = {
+  comment: string
+  rating: number
+}
+
 export type FilmComments = FilmReviewType[];

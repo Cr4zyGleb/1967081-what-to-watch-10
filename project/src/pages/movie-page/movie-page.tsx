@@ -10,6 +10,8 @@ import { AuthorizationStatus, HeaderClassNames } from '../../const';
 import MyListComponent from '../../components/mylist-component/mylist-component';
 import HeaderComponent from '../../components/header-component/header-component';
 import { CheckedAuthStatus } from '../../utils/utils';
+import { store } from '../../store';
+import { getFilmReviews } from '../../store/api-actions';
 
 function MoviePage(): JSX.Element {
   const { loadedFilms, authorizationStatus } = useAppSelector((state) => state);
@@ -17,6 +19,7 @@ function MoviePage(): JSX.Element {
   const params = useParams();
   const filmId = Number(params.id);
   const film = loadedFilms.find((element) => element.id === filmId);
+  store.dispatch(getFilmReviews(filmId));
   if (!film) {
     return <ErrorScreen404 />;
   }

@@ -1,6 +1,6 @@
 import {createAction} from '@reduxjs/toolkit';
 import { AuthorizationStatus } from '../const';
-import { FilmProps, Films } from '../types/types';
+import { FilmComments, FilmProps, Films } from '../types/types';
 
 export const changeGenre = createAction<{genre : string}>('changeGenre');
 
@@ -15,3 +15,5 @@ export const requireAuthorization = createAction<AuthorizationStatus>('requireAu
 export const setError = createAction<string | null>('setError');
 
 export const setDataLoadingStatus = createAction<boolean>('setDataLoadingStatus');
+
+export const loadedFilmReviews = createAction<FilmComments>('loadedFilmReviews');
