@@ -2,7 +2,6 @@
 import React from 'react';
 import { AuthorizationStatus, GENRES, HeaderClassNames } from '../../const';
 import { useAppSelector } from '../../hooks';
-import { CheckedAuthStatus } from '../../utils/utils';
 import FilmCard from '../film-card/filmCard';
 import GenresList from '../genres-list/genres-list';
 import HeaderComponent from '../header-component/header-component';
@@ -12,7 +11,6 @@ import ShowMoreButton from '../show-more-button/show-more-button';
 
 function MainPageComponent(): JSX.Element {
   const { maxRenderedFilmsQuantity, loadedFilms, promoFilm, authorizationStatus} = useAppSelector((state) => state);
-  const isAuthStatus = CheckedAuthStatus(authorizationStatus);
   const genreState = useAppSelector((state) => state.genre);
   const filteredFilms = loadedFilms.filter((elem) => elem.genre === genreState || genreState === GENRES.ALLGENRES).slice(0, maxRenderedFilmsQuantity);
   const { name, released, genre, posterImage, backgroundImage } = promoFilm;
@@ -47,7 +45,7 @@ function MainPageComponent(): JSX.Element {
                   </svg>
                   <span>Play</span>
                 </button>
-                {isAuthStatus ? <MyListComponent/> : ''}
+                <MyListComponent/>
               </div>
             </div>
           </div>

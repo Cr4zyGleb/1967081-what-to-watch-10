@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
-import { Fragment } from 'react';
+import { Fragment, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import FilmCard from '../../components/film-card/filmCard';
 import LogoFooter from '../../components/logo-footer/logo-footer';
@@ -9,17 +9,19 @@ import { useAppSelector } from '../../hooks';
 import { AuthorizationStatus, HeaderClassNames } from '../../const';
 import MyListComponent from '../../components/mylist-component/mylist-component';
 import HeaderComponent from '../../components/header-component/header-component';
-import { CheckedAuthStatus } from '../../utils/utils';
 import { store } from '../../store';
 import { getFilmReviews } from '../../store/api-actions';
 
 function MoviePage(): JSX.Element {
   const { loadedFilms, authorizationStatus } = useAppSelector((state) => state);
-  const isAuthStatus = CheckedAuthStatus(authorizationStatus);
   const params = useParams();
   const filmId = Number(params.id);
   const film = loadedFilms.find((element) => element.id === filmId);
-  store.dispatch(getFilmReviews(filmId));
+  useEffect(() => {
+
+    store.dispatch(getFilmReviews(filmId));
+
+  }, [filmId]);
   if (!film) {
     return <ErrorScreen404 />;
   }
@@ -47,11 +49,8 @@ function MoviePage(): JSX.Element {
                   </svg>
                   <span>Play</span>
                 </button>
-                {isAuthStatus ? <MyListComponent/> : ''}
-                {authorizationStatus === AuthorizationStatus.Auth ?
-                  <Link to={`/films/${filmId}/review`} className="btn film-card__button">Add review</Link>
-                  :
-                  ''}
+                <MyListComponent/>
+                <Link to={`/films/${filmId}/review`} className="btn film-card__button">Add review</Link>
               </div>
             </div>
           </div>

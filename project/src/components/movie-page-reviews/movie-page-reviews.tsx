@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useAppSelector } from '../../hooks';
 import { store } from '../../store';
 import { getFilmReviews } from '../../store/api-actions';
@@ -7,7 +7,9 @@ import FilmCommentsColumn from '../film-comments-column/film-comments-column';
 
 function MoviePageReviews({ film }: FilmType): JSX.Element {
   const { id } = film;
-  store.dispatch(getFilmReviews(id));
+  useEffect(() => {
+    store.dispatch(getFilmReviews(id));
+  }, [id]);
   const { loadedFilmReviews } = useAppSelector((state) => state);
   return (
     <div className="film-card__reviews film-card__row">
