@@ -11,7 +11,7 @@ function MyListComponent(): JSX.Element {
       <Link to={AppRoute.MyList} style = {{color : 'inherit', textDecoration : 'none' }}>
         <span >My list</span>
       </Link>
-      <span className="film-card__count">9</span>
+      <span className="film-card__count">8</span>
     </button>
   );
 
