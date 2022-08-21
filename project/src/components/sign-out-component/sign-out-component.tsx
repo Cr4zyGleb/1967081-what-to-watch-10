@@ -1,10 +1,10 @@
-import { useAppDispatch } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { logoutAction } from '../../store/api-actions';
 import { IsFooterType } from '../../types/types';
 
 function SignOutComponent({ isFooter }: IsFooterType): JSX.Element {
   const dispatch = useAppDispatch();
-
+  const { userAvatarUrl } = useAppSelector((state) => state);
   const onClickHandle = (event: React.MouseEvent) => {
     event.preventDefault();
     dispatch(logoutAction());
@@ -13,7 +13,7 @@ function SignOutComponent({ isFooter }: IsFooterType): JSX.Element {
     <ul className="user-block">
       <li className="user-block__item">
         <div className="user-block__avatar">
-          <img src="/img/avatar.jpg" alt="User avatar" width="63" height="63" />
+          <img src={userAvatarUrl} alt="User avatar" width="63" height="63" />
         </div>
       </li>
       <li className="user-block__item">

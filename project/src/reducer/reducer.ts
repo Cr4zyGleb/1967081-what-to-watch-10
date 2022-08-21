@@ -1,7 +1,7 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { AuthorizationStatus, GENRES } from '../const';
 import { FilmComments, FilmProps, Films } from '../types/types';
-import { changeGenre, changeMaxRenderedFilmsQuantity, loadFilms, loadPromoFilm, loadedFilmReviews, requireAuthorization, setError, setDataLoadingStatus } from './action';
+import { changeGenre, changeMaxRenderedFilmsQuantity, loadFilms, loadPromoFilm, loadedFilmReviews, requireAuthorization, setError, setDataLoadingStatus, userLogin } from './action';
 
 const beginRenderedFilmsQuantity = 8;
 const stepRenderingFilmsQuantity = 8;
@@ -16,6 +16,9 @@ type InitialStateType = {
   authorizationStatus: AuthorizationStatus,
   isDataLoading: boolean
   loadedFilmReviews: FilmComments
+  userId : number
+  userAvatarUrl : string
+  userEmail : string
 };
 
 const initialState: InitialStateType = {
@@ -46,6 +49,9 @@ const initialState: InitialStateType = {
   error: null,
   authorizationStatus: AuthorizationStatus.Unknown,
   isDataLoading: false,
+  userId : 0,
+  userAvatarUrl : '123',
+  userEmail : ''
 };
 const reducer = createReducer(initialState, (builder) => {
   builder
@@ -71,6 +77,11 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(setDataLoadingStatus, (state, action) => {
       state.isDataLoading = action.payload;
+    })
+    .addCase(userLogin, (state, action) => {
+      state.userId = action.payload.id;
+      state.userAvatarUrl = action.payload.avatarUrl;
+      state.userEmail = action.payload.email;
     })
     .addCase(changeMaxRenderedFilmsQuantity, (state) => {
       state.maxRenderedFilmsQuantity = Math.min(state.maxRenderedFilmsQuantity + stepRenderingFilmsQuantity, state.loadedFilms.length);

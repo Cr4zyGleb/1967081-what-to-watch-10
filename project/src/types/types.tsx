@@ -69,4 +69,10 @@ export type CommentData = {
   rating: number
 }
 
+export type UserLogin = {
+  userId : number
+  userAvatarUrl : string
+  userEmail : string
+}
+
 export type FilmComments = FilmReviewType[];
