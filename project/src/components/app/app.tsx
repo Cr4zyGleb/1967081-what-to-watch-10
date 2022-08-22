@@ -26,9 +26,7 @@ function App(): JSX.Element {
           <Route index element={<MainPage />} />
           <Route path={AppRoute.Films}>
             <Route path=':id' element={
-              <PrivateRoute authorizationStatus={authorizationStatus}>
-                <MoviePage />
-              </PrivateRoute>
+              <MoviePage />
             }
             />
             <Route path=':id/review' element={

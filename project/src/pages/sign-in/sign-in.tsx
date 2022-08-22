@@ -1,13 +1,14 @@
 import { FormEvent, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import HeaderComponent from '../../components/header-component/header-component';
 import LogoFooter from '../../components/logo-footer/logo-footer';
-import Logo from '../../components/logo/logo';
-import { AppRoute } from '../../const';
-import { useAppDispatch } from '../../hooks';
+import { AppRoute, AuthorizationStatus, HeaderClassNames } from '../../const';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { loginAction } from '../../store/api-actions';
 import { AuthData } from '../../types/auth-data';
 
 function SignIn(): JSX.Element {
+  const { authorizationStatus } = useAppSelector((state) => state);
   const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
   const dispatch = useAppDispatch();
@@ -31,10 +32,7 @@ function SignIn(): JSX.Element {
 
   return (
     <div className="user-page">
-      <header className="page-header user-page__head">
-        <Logo/>
-        <h1 className="page-title user-page__title">Sign in</h1>
-      </header>
+      <HeaderComponent isGuest = {authorizationStatus !== AuthorizationStatus.Auth} classText = {HeaderClassNames.UserPageHead}/>
 
       <div className="sign-in user-page__content">
         <form action="" className="sign-in__form" onSubmit={handleSubmit}>

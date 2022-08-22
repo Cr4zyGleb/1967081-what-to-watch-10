@@ -26,15 +26,22 @@ export enum APIRoute {
   Films = '/films',
   Login = '/login',
   Logout = '/logout',
-  Promo = '/promo'
+  Promo = '/promo',
+  Comments = '/comments'
 }
 
 export enum AppRoute {
   Root = '/',
-  Login = 'login',
-  MyList = 'mylist',
-  Films = 'films',
+  Login = '/login',
+  MyList = '/mylist',
+  Films = '/films',
   Player = 'player'
+}
+
+export enum HeaderClassNames {
+  default = '',
+  FilmCardHead = 'film-card__head',
+  UserPageHead = 'user-page__head'
 }
 
 export const TIMEOUT_SHOW_ERROR = 2000;

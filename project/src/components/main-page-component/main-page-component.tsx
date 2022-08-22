@@ -1,17 +1,16 @@
 
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { AppRoute, GENRES } from '../../const';
+import { AuthorizationStatus, GENRES, HeaderClassNames } from '../../const';
 import { useAppSelector } from '../../hooks';
 import FilmCard from '../film-card/filmCard';
 import GenresList from '../genres-list/genres-list';
+import HeaderComponent from '../header-component/header-component';
 import LogoFooter from '../logo-footer/logo-footer';
-import Logo from '../logo/logo';
+import MyListComponent from '../mylist-component/mylist-component';
 import ShowMoreButton from '../show-more-button/show-more-button';
-import SignOutComponent from '../sign-out-component/sign-out-component';
 
 function MainPageComponent(): JSX.Element {
-  const { maxRenderedFilmsQuantity, loadedFilms, promoFilm} = useAppSelector((state) => state);
+  const { maxRenderedFilmsQuantity, loadedFilms, promoFilm, authorizationStatus} = useAppSelector((state) => state);
   const genreState = useAppSelector((state) => state.genre);
   const filteredFilms = loadedFilms.filter((elem) => elem.genre === genreState || genreState === GENRES.ALLGENRES).slice(0, maxRenderedFilmsQuantity);
   const { name, released, genre, posterImage, backgroundImage } = promoFilm;
@@ -24,10 +23,7 @@ function MainPageComponent(): JSX.Element {
 
         <h1 className="visually-hidden">WTW</h1>
 
-        <header className="page-header film-card__head">
-          <Logo />
-          <SignOutComponent />
-        </header>
+        <HeaderComponent isGuest = {authorizationStatus !== AuthorizationStatus.Auth} classText = {HeaderClassNames.FilmCardHead}/>
 
         <div className="film-card__wrap">
           <div className="film-card__info">
@@ -49,15 +45,7 @@ function MainPageComponent(): JSX.Element {
                   </svg>
                   <span>Play</span>
                 </button>
-                <button className="btn btn--list film-card__button" type="button">
-                  <svg viewBox="0 0 19 20" width="19" height="20">
-                    <use xlinkHref="#add"></use>
-                  </svg>
-                  <Link to={AppRoute.MyList}>
-                    <span>My list</span>
-                  </Link>
-                  <span className="film-card__count">9</span>
-                </button>
+                <MyListComponent/>
               </div>
             </div>
           </div>
@@ -71,7 +59,7 @@ function MainPageComponent(): JSX.Element {
             {filteredFilms.map((film, index) => (<FilmCard film={film} key={film.id} />)
             )}
           </div>
-          <ShowMoreButton />
+          <ShowMoreButton/>
         </section>
         <LogoFooter />
       </div>

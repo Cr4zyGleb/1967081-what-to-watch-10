@@ -17,7 +17,7 @@ function AddReview(): JSX.Element {
     <section className="film-card film-card--full">
       <div className="film-card__header">
         <div className="film-card__bg">
-          <img src= {`${film.posterImage}`} alt= {film.description} />
+          <img src= {`${film.backgroundImage}`} alt= {film.name} />
         </div>
 
         <h1 className="visually-hidden">WTW</h1>
@@ -26,7 +26,7 @@ function AddReview(): JSX.Element {
           <nav className="breadcrumbs">
             <ul className="breadcrumbs__list">
               <li className="breadcrumbs__item">
-                <Link to = {`/films/${filmId}`} className="breadcrumbs__link">{film.description}</Link>
+                <Link to = {`/films/${filmId}`} className="breadcrumbs__link">{film.name}</Link>
               </li>
               <li className="breadcrumbs__item">
                 <Link to = {`/films/${filmId}/review`} className="breadcrumbs__link">Add review</Link>
