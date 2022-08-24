@@ -1,3 +1,4 @@
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { IsFooterType } from '../../types/types';
 
@@ -14,4 +15,4 @@ function Logo({isFooter}:IsFooterType): JSX.Element {
   );
 }
 
-export default Logo;
+export default React.memo(Logo);

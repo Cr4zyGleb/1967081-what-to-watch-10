@@ -1,3 +1,4 @@
+import React from 'react';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {changeGenre} from '../../reducer/action';
 function GenresList(): JSX.Element {
@@ -8,12 +9,13 @@ function GenresList(): JSX.Element {
     event.preventDefault();
     dispatch(changeGenre({genre: elem}));
   };
-  const getGenres = () => {
+  const getGenres = React.useCallback(() => {
     const newGenres = ['All genres'];
     loadedFilms.forEach((elem) => newGenres.includes(elem.genre) ? '' : newGenres.push(elem.genre));
     return newGenres;
-  };
-  const genres = getGenres();
+  }, [loadedFilms]
+  );
+  const genres = React.useMemo(() => getGenres(), [getGenres]);
   const createGenresList = () => (
     genres.map((elem) => (
       <li key={elem} className={`catalog__genres-item ${ stateGenre === elem ? 'catalog__genres-item--active' : ''}`}>
