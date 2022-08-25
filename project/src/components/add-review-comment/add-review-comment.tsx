@@ -58,4 +58,4 @@ function AddReviewComment(): JSX.Element {
   );
 }
 
-export default AddReviewComment;
+export default React.memo(AddReviewComment);
