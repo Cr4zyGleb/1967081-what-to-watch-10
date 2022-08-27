@@ -1,3 +1,4 @@
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 
@@ -17,4 +18,4 @@ function MyListComponent(): JSX.Element {
 
 }
 
-export default MyListComponent;
+export default React.memo(MyListComponent);

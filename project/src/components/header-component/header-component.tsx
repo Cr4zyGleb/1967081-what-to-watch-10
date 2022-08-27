@@ -4,9 +4,9 @@ import Logo from '../logo/logo';
 import SignOutComponent from '../sign-out-component/sign-out-component';
 import BreadcrumbsComponent from '../breadcrumbs-component/breadcrumbs-component';
 import { HeaderClassNames } from '../../const';
+import React from 'react';
 
 function HeaderComponent({isGuest, filmId, classText} : IsHeaderType): JSX.Element {
-  //main film-card__head guest ''
   const GetHeaderClassName = () => {
     let addClassName = '';
     const defaultClassName = 'page-header';
@@ -27,4 +27,4 @@ function HeaderComponent({isGuest, filmId, classText} : IsHeaderType): JSX.Eleme
   );
 }
 
-export default HeaderComponent;
+export default React.memo(HeaderComponent);
