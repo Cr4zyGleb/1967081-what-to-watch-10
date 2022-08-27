@@ -27,7 +27,8 @@ export enum APIRoute {
   Login = '/login',
   Logout = '/logout',
   Promo = '/promo',
-  Comments = '/comments'
+  Comments = '/comments',
+  Favorite = '/favorite'
 }
 
 export enum AppRoute {
@@ -35,7 +36,7 @@ export enum AppRoute {
   Login = '/login',
   MyList = '/mylist',
   Films = '/films',
-  Player = 'player'
+  Player = '/player'
 }
 
 export enum HeaderClassNames {

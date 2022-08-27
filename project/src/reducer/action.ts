@@ -20,3 +20,5 @@ export const setDataLoadingStatus = createAction<boolean>('setDataLoadingStatus'
 export const loadedFilmReviews = createAction<FilmComments>('loadedFilmReviews');
 
 export const userLogin = createAction<UserData>('userLogin');
+
+export const loadFavoriteFilms = createAction<Films>('loadFavoriteFilms');
