@@ -6,11 +6,11 @@ import ErrorScreen404 from '../../pages/error-screen-404/error-screen-404';
 import MainPage from '../../pages/main-page/main-page';
 import MoviePage from '../../pages/movie-page/movie-page';
 import MyList from '../../pages/my-list/my-list';
-import Player from '../../pages/player/player';
 import SignIn from '../../pages/sign-in/sign-in';
 import PrivateRoute from '../private-route/private-route';
 import LoadingScreen from '../../pages/loading-screen/loading-screen';
 import { isCheckedAuth } from '../../utils/utils';
+import FilmPlayer from '../film-player/film-player';
 
 function App(): JSX.Element {
   const { authorizationStatus, isDataLoading } = useAppSelector((state) => state);
@@ -44,7 +44,7 @@ function App(): JSX.Element {
           }
           />
           <Route path={AppRoute.Player} >
-            <Route path=':id' element={<Player />} />
+            <Route path=':id' element={<FilmPlayer />} />
           </Route>
         </Route>
         <Route

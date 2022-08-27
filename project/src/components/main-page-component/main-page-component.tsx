@@ -45,7 +45,7 @@ function MainPageComponent(): JSX.Element {
                   </svg>
                   <span>Play</span>
                 </button>
-                <MyListComponent/>
+                <MyListComponent film = {promoFilm}/>
               </div>
             </div>
           </div>

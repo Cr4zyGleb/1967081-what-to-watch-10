@@ -13,10 +13,17 @@ import { store } from '../../store';
 import { getFilmReviews } from '../../store/api-actions';
 
 function MoviePage(): JSX.Element {
+  // const navigate = useNavigate();
   const { loadedFilms, authorizationStatus } = useAppSelector((state) => state);
   const params = useParams();
   const filmId = Number(params.id);
   const film = loadedFilms.find((element) => element.id === filmId);
+
+  // const hanldleOnPlayButtonClick = () => {
+  //   const path = `/player/${filmId}`;
+  //   navigate(path);
+  // };
+
   useEffect(() => {
 
     store.dispatch(getFilmReviews(filmId));
@@ -64,7 +71,7 @@ function MoviePage(): JSX.Element {
             <img src={`${film.backgroundImage}`} alt={film.name} />
           </div>
           <h1 className="visually-hidden">WTW</h1>
-          <HeaderComponent isGuest = {authorizationStatus !== AuthorizationStatus.Auth} classText = {HeaderClassNames.FilmCardHead}/>
+          <HeaderComponent isGuest={authorizationStatus !== AuthorizationStatus.Auth} classText={HeaderClassNames.FilmCardHead} />
           <div className="film-card__wrap">
             <div className="film-card__desc">
               <h2 className="film-card__title">{film.name}</h2>
@@ -74,13 +81,15 @@ function MoviePage(): JSX.Element {
               </p>
 
               <div className="film-card__buttons">
-                <button className="btn btn--play film-card__button" type="button">
-                  <svg viewBox="0 0 19 19" width="19" height="19">
-                    <use xlinkHref="#play-s"></use>
-                  </svg>
-                  <span>Play</span>
-                </button>
-                <MyListComponent/>
+                <Link to={`/player/${filmId}`}>
+                  <button className="btn btn--play film-card__button" type="button">
+                    <svg viewBox="0 0 19 19" width="19" height="19">
+                      <use xlinkHref="#play-s"></use>
+                    </svg>
+                    <span>Play</span>
+                  </button>
+                </Link>
+                <MyListComponent film = {film}/>
                 <Link to={`/films/${filmId}/review`} className="btn film-card__button">Add review</Link>
               </div>
             </div>
