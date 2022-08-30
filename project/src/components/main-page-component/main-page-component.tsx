@@ -1,5 +1,6 @@
 
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { AuthorizationStatus, GENRES, HeaderClassNames } from '../../const';
 import { useAppSelector } from '../../hooks';
 import FilmCard from '../film-card/filmCard';
@@ -10,7 +11,7 @@ import MyListComponent from '../mylist-component/mylist-component';
 import ShowMoreButton from '../show-more-button/show-more-button';
 
 function MainPageComponent(): JSX.Element {
-  const { maxRenderedFilmsQuantity, loadedFilms, promoFilm, authorizationStatus} = useAppSelector((state) => state);
+  const { maxRenderedFilmsQuantity, loadedFilms, promoFilm, authorizationStatus } = useAppSelector((state) => state);
   const genreState = useAppSelector((state) => state.genre);
   const filteredFilms = React.useMemo(() => loadedFilms.filter((elem) => elem.genre === genreState || genreState === GENRES.ALLGENRES).slice(0, maxRenderedFilmsQuantity), [genreState, loadedFilms, maxRenderedFilmsQuantity]);
   const { name, released, genre, posterImage, backgroundImage } = promoFilm;
@@ -23,7 +24,7 @@ function MainPageComponent(): JSX.Element {
 
         <h1 className="visually-hidden">WTW</h1>
 
-        <HeaderComponent isGuest = {authorizationStatus !== AuthorizationStatus.Auth} classText = {HeaderClassNames.FilmCardHead}/>
+        <HeaderComponent isGuest={authorizationStatus !== AuthorizationStatus.Auth} classText={HeaderClassNames.FilmCardHead} />
 
         <div className="film-card__wrap">
           <div className="film-card__info">
@@ -39,13 +40,15 @@ function MainPageComponent(): JSX.Element {
               </p>
 
               <div className="film-card__buttons">
-                <button className="btn btn--play film-card__button" type="button">
-                  <svg viewBox="0 0 19 19" width="19" height="19">
-                    <use xlinkHref="#play-s"></use>
-                  </svg>
-                  <span>Play</span>
-                </button>
-                <MyListComponent film = {promoFilm}/>
+                <Link to={`/player/${promoFilm.id}`}>
+                  <button className="btn btn--play film-card__button" type="button">
+                    <svg viewBox="0 0 19 19" width="19" height="19">
+                      <use xlinkHref="#play-s"></use>
+                    </svg>
+                    <span>Play</span>
+                  </button>
+                </Link>
+                <MyListComponent film={promoFilm} />
               </div>
             </div>
           </div>
@@ -59,7 +62,7 @@ function MainPageComponent(): JSX.Element {
             {filteredFilms.map((film, index) => (<FilmCard film={film} key={film.id} />)
             )}
           </div>
-          <ShowMoreButton/>
+          <ShowMoreButton />
         </section>
         <LogoFooter />
       </div>

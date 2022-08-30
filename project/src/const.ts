@@ -40,7 +40,6 @@ export enum AppRoute {
 }
 
 export enum HeaderClassNames {
-  default = '',
   FilmCardHead = 'film-card__head',
   UserPageHead = 'user-page__head'
 }

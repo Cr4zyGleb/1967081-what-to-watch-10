@@ -7,8 +7,8 @@ function SignInComponent(): JSX.Element {
   return (
 
     <div className="user-block">
-      <Link to={AppRoute.Login}>
-        <a href="/" className="user-block__link">Sign in</a>
+      <Link to={AppRoute.Login} className="user-block__link">
+        Sign in
       </Link>
     </div>
 

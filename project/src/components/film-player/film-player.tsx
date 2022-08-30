@@ -12,62 +12,65 @@ function FilmPlayer(): JSX.Element {
   const filmId = Number(params.id);
   const film = loadedFilms.find((element) => element.id === filmId);
   const videoRef = useRef<HTMLVideoElement | null>(null);
-  const [isPlaying, setIsPlaying] = useState(true);
-  const [isLoading, setIsLoading] = useState(false);
-  const [togglerPos, setTogglerPos] = useState(0);
+  const [videoPlayerState, setVideoPlayerState] = useState({
+    duration: 0,
+    progress: 0,
+    isPlaying: false,
+    isLoaded: false
+  });
+
+  const handlePlayAndPauseButtonClick = () => {
+    setVideoPlayerState({
+      ...videoPlayerState,
+      isPlaying: !videoPlayerState.isPlaying
+    });
+  };
+
+  const handleFullScreenButtonClick = () => {
+    if (videoRef.current) {
+      videoRef.current?.requestFullscreen();
+    }
+  };
+
+  const handleVideoLoaded = (filmDuration: number) => {
+    setVideoPlayerState({
+      ...videoPlayerState,
+      duration: filmDuration,
+      isLoaded: true
+    });
+  };
+
+  const handleTimeUpdate = () => {
+    if (videoRef.current !== null) {
+      const progress = (videoRef.current.currentTime / videoRef.current.duration) * 100;
+      const timeLeft = videoRef.current.duration - videoRef.current.currentTime;
+
+      setVideoPlayerState({
+        ...videoPlayerState,
+        progress,
+        duration: timeLeft
+      });
+    }
+  };
 
   useEffect(() => {
     if (videoRef.current === null) {
       return;
     }
 
-    const updateTogglerPos = () => {
-      if (videoRef.current !== null) {
-        setTogglerPos(videoRef.current.currentTime / videoRef.current.duration * 100);
-      }
-      if (videoRef.current?.ended) {
-        setIsPlaying(false);
-      }
-    };
-
-    const addIsLoading = () => setIsLoading(true);
-    const dellIsLoading = () => setIsLoading(false);
-
-    videoRef.current.addEventListener('timeupdate', updateTogglerPos);
-    videoRef.current.addEventListener('loadstart', addIsLoading);
-    videoRef.current.addEventListener('canplay', dellIsLoading);
-
-    if (isPlaying) {
+    if (videoPlayerState.isPlaying) {
       videoRef.current.play();
-      return;
+    } else {
+      videoRef.current.pause();
+      videoRef.current.currentTime = 0;
+      videoRef.current.load();
     }
 
-    videoRef.current.pause();
-
-    return () => {
-      videoRef.current?.removeEventListener('timeupdate', updateTogglerPos);
-      videoRef.current?.removeEventListener('loadstart', addIsLoading);
-      videoRef.current?.removeEventListener('canplay', dellIsLoading);
-    };
-  }, [isPlaying]);
-
+  }, [videoPlayerState.isPlaying]);
 
   if (!film) {
     return <ErrorScreen404 />;
   }
-  // const videoRef = useRef<HTMLVideoElement | null>(null);
-
-  // useEffect(() => {
-  //   if (videoRef.current === null) {
-  //     return;
-  //   }
-
-  //   if (isPlaying) {
-  //     videoRef.current.play();
-  //   } else {
-  //     videoRef.current.load();
-  //   }
-  // }, [isPlaying]);
 
   return (
     <React.Fragment>
@@ -102,29 +105,34 @@ function FilmPlayer(): JSX.Element {
       </div>
 
       <div className="player">
-        {isLoading && <LoadingScreen />}
-        <video className="player__video" ref={videoRef} src={film.videoLink} poster={`${film.posterImage}`} />
+        {!videoPlayerState.isLoaded && <LoadingScreen />}
+        <video className="player__video" ref={videoRef} src={film.videoLink} poster={`${film.posterImage}`} onLoadedData={() => {
+          if (videoRef.current?.duration) {
+            handleVideoLoaded(videoRef.current?.duration);
+          }
+        }} onTimeUpdate = {handleTimeUpdate}
+        />
         <button type="button" className="player__exit" onClick={() => navigate(-1)}>Exit</button>
 
         <div className="player__controls">
           <div className="player__controls-row">
             <div className="player__time">
-              <progress className="player__progress" value={togglerPos} max="100"></progress>
-              <div className="player__toggler" style={{ left: `${togglerPos}%` }}>Toggler</div>
+              <progress className="player__progress" value={videoPlayerState.progress} max="100"></progress>
+              <div className="player__toggler" style={{ left: `${videoPlayerState.progress}%` }}>Toggler</div>
             </div>
-            <div className="player__time-value">{videoRef.current?.duration}</div>
+            <div className="player__time-value">{videoPlayerState.duration}</div>
           </div>
 
           <div className="player__controls-row">
-            <button type="button" className="player__play" onClick={() => setIsPlaying(!isPlaying)}>
+            <button type="button" className="player__play" onClick={handlePlayAndPauseButtonClick}>
               <svg viewBox="0 0 19 19" width="19" height="19">
-                <use xlinkHref={isPlaying ? '#pause' : '#play-s'}></use>
+                <use xlinkHref={videoPlayerState.isPlaying ? '#pause' : '#play-s'}></use>
               </svg>
-              <span>{isPlaying ? 'Pause' : 'Play'}</span>
+              <span>{videoPlayerState.isPlaying ? 'Pause' : 'Play'}</span>
             </button>
             <div className="player__name">Transpotting</div>
 
-            <button type="button" className="player__full-screen" onClick={() => videoRef.current?.requestFullscreen()}>
+            <button type="button" className="player__full-screen" onClick={handleFullScreenButtonClick}>
               <svg viewBox="0 0 27 27" width="27" height="27">
                 <use xlinkHref="#full-screen"></use>
               </svg>

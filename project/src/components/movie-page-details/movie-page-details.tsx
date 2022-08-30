@@ -8,7 +8,7 @@ function MoviePageDetails({ film }: FilmType): JSX.Element {
   const getFilmStarring = () => starring.map((elem, index) => {
     if (index !== starring.length - 1) {
       return (
-        <React.Fragment>
+        <React.Fragment key = {elem}>
           {elem} <br />
         </React.Fragment>
       );
