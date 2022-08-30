@@ -1,4 +1,5 @@
 import React from 'react';
+import { GENRES } from '../../const';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {changeGenre} from '../../reducer/action';
 function GenresList(): JSX.Element {
@@ -10,7 +11,7 @@ function GenresList(): JSX.Element {
     dispatch(changeGenre({genre: elem}));
   };
   const getGenres = React.useCallback(() => {
-    const newGenres = ['All genres'];
+    const newGenres = [GENRES.ALLGENRES];
     loadedFilms.forEach((elem) => newGenres.includes(elem.genre) ? '' : newGenres.push(elem.genre));
     return newGenres;
   }, [loadedFilms]

@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { VideoPlayerProps } from '../../types/types';
 
-function VideoPlayer({ film, isPlaying, setIsPlaying }: VideoPlayerProps): JSX.Element {
+function VideoPlayer({ film, isPlaying}: VideoPlayerProps): JSX.Element {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const { videoLink, posterImage } = film;
   useEffect(() => {

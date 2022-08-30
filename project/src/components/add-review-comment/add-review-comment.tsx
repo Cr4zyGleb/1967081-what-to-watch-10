@@ -1,11 +1,13 @@
 import React, { useState, ChangeEvent, FormEvent, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import { AppRoute } from '../../const';
 import { useAppDispatch} from '../../hooks';
 import { postFilmReview } from '../../store/api-actions';
-import LoadingScreen from '../../pages/loading-screen/loading-screen';
+// import LoadingScreen from '../../pages/loading-screen/loading-screen';
 
 function AddReviewComment(): JSX.Element {
   const params = useParams();
+  const navigate = useNavigate();
   const [formValid, setFormValid] = useState(true);
   const dispatch = useAppDispatch();
   const filmId = params.id;
@@ -13,11 +15,6 @@ function AddReviewComment(): JSX.Element {
     rating: 0,
     comment: '',
   });
-
-  const isShowLoader = true;
-
-  // const isLoadingFailed = useAppSelector(getLoadingFailedStatus);
-  // const isShowLoader = useAppSelector(getLoaderStatus);
 
   const MAX_RATING = 10;
 
@@ -34,6 +31,7 @@ function AddReviewComment(): JSX.Element {
     evt.preventDefault();
     if (filmReview.comment.length >= 50 && filmReview.comment.length <= 400) {
       dispatch(postFilmReview([filmId, filmReview]));
+      navigate(`${AppRoute.Films}/${filmId}`);
     }
   };
 
@@ -43,12 +41,12 @@ function AddReviewComment(): JSX.Element {
 
   return (
     <React.Fragment>
-      {isShowLoader ? <LoadingScreen/> : ''}
+      {/* {isShowLoader ? <LoadingScreen/> : ''} */}
       <div className="add-review">
         <form action="/" onSubmit={postForm} className="add-review__htmlForm">
           <div className="rating">
             <div className="rating__stars">
-              {Array(MAX_RATING).fill('').map((_item, id) => {
+              {Array(MAX_RATING).fill('').map((_, id) => {
                 const rating = MAX_RATING - id;
                 return (
                   <React.Fragment key={rating}>

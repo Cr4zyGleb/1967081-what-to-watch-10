@@ -103,9 +103,8 @@ function FilmPlayer(): JSX.Element {
           </symbol>
         </svg>
       </div>
-
       <div className="player">
-        {!videoPlayerState.isLoaded && <LoadingScreen />}
+        {videoPlayerState.isLoaded ? '' : <LoadingScreen />}
         <video className="player__video" ref={videoRef} src={film.videoLink} poster={`${film.posterImage}`} onLoadedData={() => {
           if (videoRef.current?.duration) {
             handleVideoLoaded(videoRef.current?.duration);

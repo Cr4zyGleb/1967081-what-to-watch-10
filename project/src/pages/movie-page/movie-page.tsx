@@ -13,16 +13,10 @@ import { store } from '../../store';
 import { getFilmReviews } from '../../store/api-actions';
 
 function MoviePage(): JSX.Element {
-  // const navigate = useNavigate();
   const { loadedFilms, authorizationStatus } = useAppSelector((state) => state);
   const params = useParams();
   const filmId = Number(params.id);
   const film = loadedFilms.find((element) => element.id === filmId);
-
-  // const hanldleOnPlayButtonClick = () => {
-  //   const path = `/player/${filmId}`;
-  //   navigate(path);
-  // };
 
   useEffect(() => {
 

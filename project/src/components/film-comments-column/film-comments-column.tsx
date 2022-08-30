@@ -18,11 +18,11 @@ function FilmCommentsColumn({ columnNumber, filmComments }: FilmCommentsColumnTy
     }
     return false;
   };
-  const filmColumnComments = filmComments.filter((elem ,index) => isRightColumn(index));
+  const filmColumnComments = filmComments.filter((_,index) => isRightColumn(index));
   let keyIndex = 0;
   return (
     <React.Fragment>
-      {filmColumnComments.map((elem , index) => <FilmComment filmReview = {elem} key = {keyIndex++}/>)}
+      {filmColumnComments.map((elem) => <FilmComment filmReview = {elem} key = {keyIndex++}/>)}
     </React.Fragment>
   );
 }

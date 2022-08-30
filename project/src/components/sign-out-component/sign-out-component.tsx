@@ -2,9 +2,8 @@ import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { logoutAction } from '../../store/api-actions';
-import { IsFooterType } from '../../types/types';
 
-function SignOutComponent({ isFooter }: IsFooterType): JSX.Element {
+function SignOutComponent(): JSX.Element {
   const dispatch = useAppDispatch();
   const { userAvatarUrl } = useAppSelector((state) => state);
   const onClickHandle = (event: React.MouseEvent) => {

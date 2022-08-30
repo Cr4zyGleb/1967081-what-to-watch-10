@@ -59,7 +59,7 @@ function MainPageComponent(): JSX.Element {
           <h2 className="catalog__title visually-hidden">Catalog</h2>
           <GenresList />
           <div className="catalog__films-list">
-            {filteredFilms.map((film, index) => (<FilmCard film={film} key={film.id} />)
+            {filteredFilms.map((film) => (<FilmCard film={film} key={film.id} />)
             )}
           </div>
           <ShowMoreButton />
