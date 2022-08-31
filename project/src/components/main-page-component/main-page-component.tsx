@@ -13,7 +13,7 @@ import ShowMoreButton from '../show-more-button/show-more-button';
 function MainPageComponent(): JSX.Element {
   const { maxRenderedFilmsQuantity, loadedFilms, promoFilm, authorizationStatus } = useAppSelector((state) => state);
   const genreState = useAppSelector((state) => state.genre);
-  const filteredFilms = React.useMemo(() => loadedFilms.filter((elem) => elem.genre === genreState || genreState === GENRES.ALLGENRES).slice(0, maxRenderedFilmsQuantity), [genreState, loadedFilms, maxRenderedFilmsQuantity]);
+  const filteredFilms = React.useMemo(() => loadedFilms.filter((elem) => elem.genre === genreState || genreState === GENRES.ALL_GENRES).slice(0, maxRenderedFilmsQuantity), [genreState, loadedFilms, maxRenderedFilmsQuantity]);
   const { name, released, genre, posterImage, backgroundImage } = promoFilm;
   return (
     <React.Fragment>

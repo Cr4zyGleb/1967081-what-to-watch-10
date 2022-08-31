@@ -9,9 +9,10 @@ const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
 );
 
+store.dispatch(checkAuthAction());
 store.dispatch(fetchFilmsAction());
 store.dispatch(fetchPromoFilmAction());
-store.dispatch(checkAuthAction());
+
 root.render(
   <React.StrictMode>
     <Provider store={store}>

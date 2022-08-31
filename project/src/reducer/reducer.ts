@@ -23,7 +23,7 @@ type InitialStateType = {
 };
 
 const initialState: InitialStateType = {
-  genre: GENRES.ALLGENRES,
+  genre: GENRES.ALL_GENRES,
   loadedFilmReviews: [],
   filteredFilms: [],
   loadedFilms: [],

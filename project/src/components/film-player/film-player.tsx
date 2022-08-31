@@ -1,9 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useAppSelector } from '../../hooks';
 import ErrorScreen404 from '../../pages/error-screen-404/error-screen-404';
-import LoadingScreen from '../../pages/loading-screen/loading-screen';
-
 
 function FilmPlayer(): JSX.Element {
   const navigate = useNavigate();
@@ -11,62 +9,43 @@ function FilmPlayer(): JSX.Element {
   const params = useParams();
   const filmId = Number(params.id);
   const film = loadedFilms.find((element) => element.id === filmId);
-  const videoRef = useRef<HTMLVideoElement | null>(null);
-  const [videoPlayerState, setVideoPlayerState] = useState({
-    duration: 0,
-    progress: 0,
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [stateVideo, setStateVideo] = useState({
+    timeValue: '0',
     isPlaying: false,
-    isLoaded: false
+    isFullscreen : false,
+    progress : 0
   });
 
-  const handlePlayAndPauseButtonClick = () => {
-    setVideoPlayerState({
-      ...videoPlayerState,
-      isPlaying: !videoPlayerState.isPlaying
-    });
-  };
-
-  const handleFullScreenButtonClick = () => {
-    if (videoRef.current) {
-      videoRef.current?.requestFullscreen();
-    }
-  };
-
-  const handleVideoLoaded = (filmDuration: number) => {
-    setVideoPlayerState({
-      ...videoPlayerState,
-      duration: filmDuration,
-      isLoaded: true
-    });
-  };
-
-  const handleTimeUpdate = () => {
-    if (videoRef.current !== null) {
-      const progress = (videoRef.current.currentTime / videoRef.current.duration) * 100;
-      const timeLeft = videoRef.current.duration - videoRef.current.currentTime;
-
-      setVideoPlayerState({
-        ...videoPlayerState,
-        progress,
-        duration: timeLeft
+  const timeProgressHandle = () => {
+    if (videoRef.current?.duration && videoRef.current?.currentTime) {
+      const time = Math.floor(videoRef.current?.duration - videoRef.current?.currentTime);
+      const timeValue = `${Math.floor(time / 3600)}:${Math.floor(time % 3600 / 60)}:${time % 60}`;
+      const progress = (videoRef.current?.currentTime / videoRef.current?.duration) * 100;
+      setStateVideo({
+        ...stateVideo,
+        timeValue: timeValue,
+        progress: progress
       });
+
     }
   };
 
-  useEffect(() => {
-    if (videoRef.current === null) {
-      return;
-    }
+  const onFullScreenOnOff = () => {
+    setStateVideo({
+      ...stateVideo,
+      isFullscreen: !stateVideo.isFullscreen
+    });
+    videoRef.current?.requestFullscreen();
+  };
 
-    if (videoPlayerState.isPlaying) {
-      videoRef.current.play();
-    } else {
-      videoRef.current.pause();
-      videoRef.current.currentTime = 0;
-      videoRef.current.load();
-    }
-
-  }, [videoPlayerState.isPlaying]);
+  const playPauseHandle = () => {
+    setStateVideo({
+      ...stateVideo,
+      isPlaying: !stateVideo.isPlaying
+    });
+    stateVideo.isPlaying ? videoRef.current?.pause() : videoRef.current?.play();
+  };
 
   if (!film) {
     return <ErrorScreen404 />;
@@ -104,34 +83,48 @@ function FilmPlayer(): JSX.Element {
         </svg>
       </div>
       <div className="player">
-        {videoPlayerState.isLoaded ? '' : <LoadingScreen />}
-        <video className="player__video" ref={videoRef} src={film.videoLink} poster={`${film.posterImage}`} onLoadedData={() => {
-          if (videoRef.current?.duration) {
-            handleVideoLoaded(videoRef.current?.duration);
-          }
-        }} onTimeUpdate = {handleTimeUpdate}
+        <video
+          className="player__video"
+          ref={videoRef}
+          src={film.videoLink}
+          poster={`${film.posterImage}`}
+          onTimeUpdate={timeProgressHandle}
         />
         <button type="button" className="player__exit" onClick={() => navigate(-1)}>Exit</button>
 
         <div className="player__controls">
           <div className="player__controls-row">
             <div className="player__time">
-              <progress className="player__progress" value={videoPlayerState.progress} max="100"></progress>
-              <div className="player__toggler" style={{ left: `${videoPlayerState.progress}%` }}>Toggler</div>
+              <progress
+                className="player__progress"
+                value = {stateVideo.progress}
+                max="100"
+              />
+              <div className="player__toggler" style={{}}>Toggler</div>
             </div>
-            <div className="player__time-value">{videoPlayerState.duration}</div>
+            <div className="player__time-value">{stateVideo.timeValue}</div>
           </div>
 
           <div className="player__controls-row">
-            <button type="button" className="player__play" onClick={handlePlayAndPauseButtonClick}>
-              <svg viewBox="0 0 19 19" width="19" height="19">
-                <use xlinkHref={videoPlayerState.isPlaying ? '#pause' : '#play-s'}></use>
-              </svg>
-              <span>{videoPlayerState.isPlaying ? 'Pause' : 'Play'}</span>
-            </button>
+            {!stateVideo.isPlaying && (
+              <button onClick={playPauseHandle} type="button" className="player__play">
+                <svg viewBox="0 0 19 19" width="19" height="19">
+                  <use xlinkHref="#play-s"></use>
+                </svg>
+                <span>Play</span>
+              </button>
+            )}
+            {stateVideo.isPlaying && (
+              <button onClick={playPauseHandle} type="button" className="player__play">
+                <svg viewBox="0 0 14 21" width="14" height="21">
+                  <use xlinkHref="#pause"></use>
+                </svg>
+                <span>Pause</span>
+              </button>
+            )}
             <div className="player__name">Transpotting</div>
 
-            <button type="button" className="player__full-screen" onClick={handleFullScreenButtonClick}>
+            <button type="button" className="player__full-screen" onClick={onFullScreenOnOff}>
               <svg viewBox="0 0 27 27" width="27" height="27">
                 <use xlinkHref="#full-screen"></use>
               </svg>
@@ -144,5 +137,5 @@ function FilmPlayer(): JSX.Element {
   );
 }
 
-export default React.memo(FilmPlayer);
+export default FilmPlayer;
 

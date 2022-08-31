@@ -5,7 +5,7 @@ import { changeMaxRenderedFilmsQuantity } from '../../reducer/action';
 function ShowMoreButton(): JSX.Element {
   const dispatch = useAppDispatch();
   const { maxRenderedFilmsQuantity, loadedFilms, genre } = useAppSelector((state) => state);
-  const allFilteredFilms = loadedFilms.filter((elem) => elem.genre === genre || genre === GENRES.ALLGENRES);
+  const allFilteredFilms = loadedFilms.filter((elem) => elem.genre === genre || genre === GENRES.ALL_GENRES);
   const handlerShowMoreButtonClick = () => {
     dispatch(changeMaxRenderedFilmsQuantity());
   };

@@ -11,7 +11,7 @@ function GenresList(): JSX.Element {
     dispatch(changeGenre({genre: elem}));
   };
   const getGenres = React.useCallback(() => {
-    const newGenres = [GENRES.ALLGENRES];
+    const newGenres = [GENRES.ALL_GENRES];
     loadedFilms.forEach((elem) => newGenres.includes(elem.genre) ? '' : newGenres.push(elem.genre));
     return newGenres;
   }, [loadedFilms]

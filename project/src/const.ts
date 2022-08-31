@@ -19,7 +19,7 @@ export enum FilmLevels {
 }
 
 export const GENRES = {
-  ALLGENRES:  'All genres'
+  ALL_GENRES:  'All genres'
 };
 
 export enum ErrorMessages {
