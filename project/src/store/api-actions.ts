@@ -67,6 +67,8 @@ export const postFavoriteFilm = createAsyncThunk<void, FavoriteFilmStatus, {
   'postFavoriteFilm',
   async ({filmId, status}, {dispatch, extra: api}) => {
     await api.post<FilmProps>(`${APIRoute.Favorite}/${filmId}/${status}`);
+    const {data} = await api.get<Films>(APIRoute.Favorite);
+    dispatch(loadFavoriteFilms(data));
   },
 );
 
@@ -89,7 +91,7 @@ export const checkAuthAction = createAsyncThunk<void, undefined, {
   'checkAuth',
   async (_arg, {dispatch, extra: api}) => {
     try {
-      const {data} = await api.post<UserData>(APIRoute.Login);
+      const {data} = await api.get<UserData>(APIRoute.Login);
       dispatch(userLogin(data));
       dispatch(requireAuthorization(AuthorizationStatus.Auth));
     } catch {

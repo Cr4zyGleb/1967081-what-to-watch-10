@@ -22,6 +22,11 @@ export const GENRES = {
   ALLGENRES: 'All genres'
 };
 
+export const ERRORMESSAGES = {
+  COMMENT: 'Комментарий должен быть больше 50 и не больше 400 символов',
+  RATING: 'Выберите рейтинг!'
+};
+
 export enum APIRoute {
   Films = '/films',
   Login = '/login',
