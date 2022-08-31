@@ -1,6 +1,6 @@
 import React, { useState, ChangeEvent, FormEvent, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { AppRoute, ERRORMESSAGES } from '../../const';
+import { AppRoute, ErrorMessages} from '../../const';
 import { useAppDispatch } from '../../hooks';
 import { postFilmReview } from '../../store/api-actions';
 import ErrorMessage from '../error-message/error-message';
@@ -85,8 +85,8 @@ function AddReviewComment(): JSX.Element {
           </div>
         </div>
       </form>
-      {!ratingValid ? <ErrorMessage error={ERRORMESSAGES.RATING} /> : ''}
-      {!commentValid ? <ErrorMessage error={ERRORMESSAGES.COMMENT} /> : ''}
+      {!ratingValid ? <ErrorMessage error={ErrorMessages.Rating} /> : ''}
+      {!commentValid ? <ErrorMessage error={ErrorMessages.Coment} /> : ''}
     </div>
   );
 }

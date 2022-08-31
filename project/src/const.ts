@@ -19,13 +19,13 @@ export enum FilmLevels {
 }
 
 export const GENRES = {
-  ALLGENRES: 'All genres'
+  ALLGENRES:  'All genres'
 };
 
-export const ERRORMESSAGES = {
-  COMMENT: 'Комментарий должен быть больше 50 и не больше 400 символов',
-  RATING: 'Выберите рейтинг!'
-};
+export enum ErrorMessages {
+  Coment = 'Комментарий должен быть больше 50 и не больше 400 символов',
+  Rating ='Выберите рейтинг!'
+}
 
 export enum APIRoute {
   Films = '/films',
